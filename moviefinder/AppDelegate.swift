@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import CoreLocation
 import MapKit
+import Alamofire
 
 
 let centerLat = 20.1512
@@ -18,6 +19,8 @@ let centerLon = 2.46545
 // Définition d'une notification pour prévenir les views du changement de position de l'user
 extension Notification.Name {
     static let userDidChange = Notification.Name("userDidChange")
+    static let moviesDidChange = Notification.Name("moviesDidChange")
+
 }
 
 
@@ -34,8 +37,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didSet{
             let notification = Notification(name: Notification.Name.userDidChange)
             NotificationCenter.default.post(notification)
+            
+            // sitôt que la localisation est fixée
+            let urlString = "http://data.tmsapi.com/v1.1/movies/showings"
+            
+            let date = Date()
+            let formater = DateFormatter()
+            
+            formater.dateFormat = "yyyy-MM-dd"
+            let convertedDate=formater.string(from: date as Date)
+            
+            
+            
+            print(convertedDate)
+            
+            let key =  "exzx3undakwb7ettub76tf2u" //"exzx3undakwb7ettub76tf2u"
+            let parameters: [String: Any] = [
+                "accept": "application/json",
+                "startDate": convertedDate,
+                "lat": userLocation!.coordinate.latitude,
+                "lng": userLocation!.coordinate.longitude,
+                "api_key": key
+            ]
+            
+            Alamofire
+                .request(urlString, parameters: parameters)
+                .validate()
+                .responseJSON { (response: DataResponse<Any>) in
+                    
+                    switch response.result {
+                        
+                    case .success(let json):
+                        self.movies = json as? [[String: Any]]
+                        
+                    case .failure(let error):
+                        print(error)
+                    }
+            }
+            
+            
+            
         }
     }
+    
+    var movies: [[String: Any]]? {
+        didSet {
+            let notification = Notification(name: Notification.Name.moviesDidChange)
+            NotificationCenter.default.post(notification)
+        }
     
     
     
