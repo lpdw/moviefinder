@@ -7,16 +7,51 @@
 //
 
 import UIKit
+import CoreData
+import CoreLocation
+import MapKit
+
+
+let centerLat = 20.1512
+let centerLon = 2.46545
+
+// Définition d'une notification pour prévenir les views du changement de position de l'user
+extension Notification.Name {
+    static let userDidChange = Notification.Name("userDidChange")
+}
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    let locationManager = CLLocationManager()
+    var center = CLLocationCoordinate2D(latitude: centerLat, longitude: centerLon)
 
+    // définition de la localisation de l'user
+    var userLocation: CLLocation? {
+        didSet{
+            let notification = Notification(name: Notification.Name.userDidChange)
+            NotificationCenter.default.post(notification)
+        }
+    }
+    
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+       
+        //GMSServices.provideAPIKey("AIzaSyAIn-8knnjR8hTjTn7pUbJUDwTo-9A5vrU")
+        
+        self.startLocate()
+        
         return true
+    }
+    
+    
+    class func instance() -> AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -43,4 +78,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
+
+extension AppDelegate: CLLocationManagerDelegate {
+    
+    func startLocate() {
+        self.locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.distanceFilter = 100.0
+        self.locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("locations: \(locations)")
+        userLocation = locations.last
+        // center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+
+    }
+    
+}
+
 

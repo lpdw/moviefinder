@@ -6,7 +6,7 @@ target 'moviefinder' do
   use_frameworks!
 
   # Pods for moviefinder
-  pod ‘Alamofire’
+  pod 'Alamofire'
 
   target 'moviefinderTests' do
     inherit! :search_paths
