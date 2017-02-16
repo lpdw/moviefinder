@@ -31,7 +31,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let locationManager = CLLocationManager()
     var center = CLLocationCoordinate2D(latitude: centerLat, longitude: centerLon)
-
+    
+    //
+    var movies: [[String: Any]]? {
+        didSet {
+            let notification = Notification(name: Notification.Name.moviesDidChange)
+            NotificationCenter.default.post(notification)
+        }
+    }
+    
     // définition de la localisation de l'user
     var userLocation: CLLocation? {
         didSet{
@@ -57,6 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 "startDate": convertedDate,
                 "lat": userLocation!.coordinate.latitude,
                 "lng": userLocation!.coordinate.longitude,
+                "radius": 2,
                 "api_key": key
             ]
             
@@ -69,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         
                     case .success(let json):
                         self.movies = json as? [[String: Any]]
-                        
+                        print(json)
                     case .failure(let error):
                         print(error)
                     }
@@ -78,14 +87,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             
         }
+        
+
     }
-    
-    var movies: [[String: Any]]? {
-        didSet {
-            let notification = Notification(name: Notification.Name.moviesDidChange)
-            NotificationCenter.default.post(notification)
-        }
-    
+
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -147,5 +152,6 @@ extension AppDelegate: CLLocationManagerDelegate {
     }
     
 }
+
 
 
