@@ -7,7 +7,7 @@ target 'moviefinder' do
 
   # Pods for moviefinder
   pod 'Alamofire'
-
+  
   target 'moviefinderTests' do
     inherit! :search_paths
     # Pods for testing

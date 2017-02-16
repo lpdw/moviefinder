@@ -61,8 +61,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             for item in response.mapItems {
                 let theatre = Movie(coordinate: item.placemark.coordinate)
-                mapView.addAnnotation(theatre)
-                print(item)
+                let pin = MKPointAnnotation()
+                pin.coordinate = theatre.coordinate
+                pin.title = item.name
+                print.subtitle = item.placemark.countryCode
+                    mapView.addAnnotation(pin)
             }
         }
     }
