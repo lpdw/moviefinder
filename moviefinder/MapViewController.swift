@@ -10,20 +10,24 @@ import UIKit
 import CoreLocation
 import MapKit
 import Alamofire
+import GooglePlaces
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         
+        super.viewDidLoad()
+        self.mapView.delegate = self
         // Ajout d'un observer pour récupérer les notifications du délégué
         NotificationCenter.default.addObserver(self, selector: #selector(userDidChange), name: Notification.Name.userDidChange, object: nil)
         
         // Ajout des movies sur la carte
         NotificationCenter.default.addObserver(self, selector: #selector(movieDidChange), name: NSNotification.Name.moviesDidChange, object: nil)
 
+        
+        
         let center = AppDelegate.instance().center
         let camera = MKMapCamera(lookingAtCenter: center, fromEyeCoordinate: center, eyeAltitude: 5000.0)
         self.mapView.setCamera(camera, animated: true)
@@ -32,7 +36,8 @@ class MapViewController: UIViewController {
     
     func userDidChange(notification: Notification) {
         if let location = AppDelegate.instance().userLocation {
-            self.mapView.setCenter(location.coordinate, animated: true)
+            let camera = MKMapCamera(lookingAtCenter: location.coordinate, fromEyeCoordinate: location.coordinate, eyeAltitude: 15000.0)
+            self.mapView.setCamera(camera, animated: true)
         }
     }
 
@@ -41,7 +46,28 @@ class MapViewController: UIViewController {
             setAnnotations(with: movies)
         }
     }
-        // Do any additional setup after loading the view.
+    
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        let request = MKLocalSearchRequest()
+        request.naturalLanguageQuery = "theatres"
+        request.region = mapView.region
+        print(mapView.region)
+        let search = MKLocalSearch(request: request)
+        search.start { response, error in
+            guard let response = response else {
+                print("There was an error searching for: \(request.naturalLanguageQuery) error: \(error)")
+                return
+            }
+            
+            for item in response.mapItems {
+                let theatre = Movie(coordinate: item.placemark.coordinate)
+                mapView.addAnnotation(theatre)
+                print(item)
+            }
+        }
+    }
+
+    // Do any additional setup after loading the view.
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
