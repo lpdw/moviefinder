@@ -10,7 +10,6 @@ import UIKit
 import CoreLocation
 import MapKit
 import Alamofire
-import GooglePlaces
 
 class MapViewController: UIViewController, MKMapViewDelegate {
 
@@ -43,15 +42,34 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     func movieDidChange(notification: Notification) {
         if let movies = AppDelegate.instance().movies {
-            setAnnotations(with: movies)
+            //setAnnotations(with: movies)
         }
     }
-    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+  
+        let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Pin")
+        view.rightCalloutAccessoryView = UIButton(type: .infoLight)
+        view.canShowCallout = true
+        return view
+        
+    }
+
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        let theater = view.annotation as? String
+        performSegue(withIdentifier: "showDetails", sender: theater)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        let theater = sender as? String
+        let details = segue.destination as? TheaterViewController
+        details?.theater = theater
+        
+    }
+        
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = "theatres"
         request.region = mapView.region
-        print(mapView.region)
+
         let search = MKLocalSearch(request: request)
         search.start { response, error in
             guard let response = response else {
@@ -60,15 +78,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
             
             for item in response.mapItems {
-                let theatre = Movie(coordinate: item.placemark.coordinate)
+                print(item)
+                let theatre = Theater(coordinate: item.placemark.coordinate, name: "", url : "")
                 let pin = MKPointAnnotation()
                 pin.coordinate = theatre.coordinate
                 pin.title = item.name
-                print.subtitle = item.placemark.countryCode
-                    mapView.addAnnotation(pin)
+                mapView.addAnnotation(pin)
             }
         }
     }
+
 
     // Do any additional setup after loading the view.
 
@@ -90,7 +109,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     
     
-    func setAnnotations(with movies: [[String: Any]]) {
+    /*func setAnnotations(with movies: [[String: Any]]) {
         
         let centerLocation = CLLocation(latitude: centerLat, longitude: centerLon)
         
@@ -127,8 +146,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     let lon = loc["lon"] as? CLLocationDegrees
                 {
                     let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                    let movie = Movie(coordinate: coordinate)
-                    return movie
+                    let theater = Theater(coordinate: coordinate, )
+                    return movies
                 }
                 return nil
             }
@@ -142,7 +161,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 
                 return distance0 < distance1
         }
-        
         self.mapView.addAnnotations(annotations)
-    }
+    }*/
 }

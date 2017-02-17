@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		371CF711387B0B0874D35000 /* Pods_moviefinderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A15F602D6A52D82FF9B525D /* Pods_moviefinderTests.framework */; };
 		3B99FD40491FA90D1DA73A36 /* Pods_moviefinderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E552B0A223DC5C44F4D80F14 /* Pods_moviefinderUITests.framework */; };
+		7E22F1E71E56EF2000A57949 /* Theater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22F1E61E56EF2000A57949 /* Theater.swift */; };
 		7E41BFA81E55A2D600799C2B /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E41BFA71E55A2D600799C2B /* Movie.swift */; };
+		7E41BFAA1E55DB0600799C2B /* TheaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E41BFA91E55DB0600799C2B /* TheaterViewController.swift */; };
 		EC400CC93A54A1C5CBB89BB0 /* Pods_moviefinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D91F63DDF3DB11289BF8F566 /* Pods_moviefinder.framework */; };
 		F17E9F9E1E54523600EE2204 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17E9F9D1E54523600EE2204 /* AppDelegate.swift */; };
 		F17E9FA01E54523600EE2204 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17E9F9F1E54523600EE2204 /* ViewController.swift */; };
@@ -41,7 +43,9 @@
 /* Begin PBXFileReference section */
 		1612F6D03236F4318682BD94 /* Pods-moviefinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-moviefinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-moviefinder/Pods-moviefinder.debug.xcconfig"; sourceTree = "<group>"; };
 		60850265CB4413E1ED96BD7C /* Pods-moviefinderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-moviefinderUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-moviefinderUITests/Pods-moviefinderUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		7E22F1E61E56EF2000A57949 /* Theater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theater.swift; sourceTree = "<group>"; };
 		7E41BFA71E55A2D600799C2B /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		7E41BFA91E55DB0600799C2B /* TheaterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheaterViewController.swift; sourceTree = "<group>"; };
 		9504AB68203F8056FD71E937 /* Pods-moviefinderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-moviefinderUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-moviefinderUITests/Pods-moviefinderUITests.release.xcconfig"; sourceTree = "<group>"; };
 		96A3DCD58F5A3C5EE7C8AE52 /* Pods-moviefinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-moviefinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-moviefinder/Pods-moviefinder.release.xcconfig"; sourceTree = "<group>"; };
 		9A15F602D6A52D82FF9B525D /* Pods_moviefinderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_moviefinderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,8 +148,10 @@
 				F17E9F9D1E54523600EE2204 /* AppDelegate.swift */,
 				F17E9F9F1E54523600EE2204 /* ViewController.swift */,
 				7E41BFA71E55A2D600799C2B /* Movie.swift */,
+				7E22F1E61E56EF2000A57949 /* Theater.swift */,
 				F17E9FCB1E545EF700EE2204 /* MapViewController.swift */,
 				F17E9FA11E54523600EE2204 /* Main.storyboard */,
+				7E41BFA91E55DB0600799C2B /* TheaterViewController.swift */,
 				F17E9FA41E54523600EE2204 /* Assets.xcassets */,
 				F17E9FA61E54523600EE2204 /* LaunchScreen.storyboard */,
 				F17E9FA91E54523600EE2204 /* Info.plist */,
@@ -455,6 +461,8 @@
 				F17E9FA01E54523600EE2204 /* ViewController.swift in Sources */,
 				F17E9FCC1E545EF700EE2204 /* MapViewController.swift in Sources */,
 				7E41BFA81E55A2D600799C2B /* Movie.swift in Sources */,
+				7E22F1E71E56EF2000A57949 /* Theater.swift in Sources */,
+				7E41BFAA1E55DB0600799C2B /* TheaterViewController.swift in Sources */,
 				F17E9F9E1E54523600EE2204 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 "startDate": convertedDate,
                 "lat": userLocation!.coordinate.latitude,
                 "lng": userLocation!.coordinate.longitude,
-                "radius": 2,
+                "radius": 10,
                 "api_key": key
             ]
             
@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         
                     case .success(let json):
                         self.movies = json as? [[String: Any]]
-                        //print(json)
+                        print(json)
                     case .failure(let error):
                         print(error)
                     }
