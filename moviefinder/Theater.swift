@@ -13,11 +13,14 @@ import MapKit
 
 class Theater: NSObject, MKAnnotation {
     
+    var name: String?
+    var url: String?
+    
     var coordinate: CLLocationCoordinate2D
-    var name: String
-    var url: String
+    var title: String?
+    var subtitle: String?
 
-    init(coordinate: CLLocationCoordinate2D, name: String, url: String) {
+    init(coordinate: CLLocationCoordinate2D, name: String?, url: String?) {
         self.coordinate = coordinate
         self.name = name
         self.url = url

@@ -55,13 +55,21 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        let theater = view.annotation as? String
-        performSegue(withIdentifier: "showDetails", sender: theater)
+        
+        if let theater = view.annotation as? Theater {
+            performSegue(withIdentifier: "showDetails", sender: theater)
+        }
+        
     }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        let theater = sender as? String
-        let details = segue.destination as? TheaterViewController
-        details?.theater = theater
+        if (segue.identifier == "showDetails") {
+            let theater = sender as? Theater
+            let details = segue.destination as? TheaterViewController
+            details?.theater = theater
+        }
+
         
     }
         
@@ -78,12 +86,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
             
             for item in response.mapItems {
-                print(item)
-                let theatre = Theater(coordinate: item.placemark.coordinate, name: "", url : "")
-                let pin = MKPointAnnotation()
-                pin.coordinate = theatre.coordinate
-                pin.title = item.name
-                mapView.addAnnotation(pin)
+                
+                let theatre = Theater(coordinate: item.placemark.coordinate, name: item.name, url : item.url?.absoluteString)
+//                let pin = MKPointAnnotation()
+//                pin.coordinate = theatre.coordinate
+                theatre.title = item.name
+            
+                mapView.addAnnotation(theatre)
             }
         }
     }

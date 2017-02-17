@@ -9,13 +9,23 @@
 import UIKit
 
 class TheaterViewController: UIViewController {
+    
     @IBOutlet weak var back: UIButton!
     @IBOutlet weak var details: UITextView!
-    var theater : String?
+    var theater : Theater?
+    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-        details.text = theater.debugDescription
-        // Do any additional setup after loading the view.
+        
+        back.addTarget(self, action: #selector(self.backtoMapView), for: .touchUpInside)
+        
+        details.text = theater?.name     
+        
+    }
+    
+    @IBAction func backtoMapView(sender: UIButton) {
+        self.dismiss(animated: true, completion: {})
     }
 
     override func didReceiveMemoryWarning() {
